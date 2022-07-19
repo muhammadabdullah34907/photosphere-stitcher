@@ -1,0 +1,5 @@
+numba==0.55.2
+numpy==1.19.5
+opencv_python_headless==4.5.5.64
+pypardiso==0.4.1
+scipy==1.2.0
