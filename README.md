@@ -1,0 +1,2 @@
+# photosphere-stitcher
+photosphere stitcher
