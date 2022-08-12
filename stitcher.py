@@ -32,10 +32,12 @@ def find_gains(overlaps, sizes, stdn=0.1, stdg=2):
 
     return np.linalg.solve(aa_, np.sum(nsize2, axis=1))
 
+
 def equalize_gains(regions):
     """Equalize the exposures by minimizing differences on overlaps."""
     n_imgs = len(regions)
     overlaps, sizes = np.zeros((n_imgs, n_imgs)), np.zeros((n_imgs, n_imgs))
+
     height, width = regions[0].img.shape[:2]
     tr_ = np.array([[1, 0, width/2], [0, 1, height/2], [0, 0, 1]])
     inv_tr = np.array([[1, 0, -width/2], [0, 1, -height/2], [0, 0, 1]])
@@ -392,7 +394,7 @@ def main():
                         help="directory with the images to process.")
     parser.add_argument("-s", "--shrink", type=float, default=2,
                         help="downsample the images by this amount.")
-    parser.add_argument("--ba", default="last",
+    parser.add_argument("--ba", default="incr",
                         choices=["none", "incr", "last"],
                         help="bundle adjustment type.")
     parser.add_argument("--equalize", "-e", action="store_true",
@@ -407,11 +409,9 @@ def main():
     args = parser.parse_args()
 
     exts = [".jpg", ".png", ".bmp"]
-    print(exts)
     exts += [ex.upper() for ex in exts]
-    print(exts)
+
     name = f"{os.path.basename(os.path.normpath(args.path))}_s{args.shrink}"
-    print(name)
     files = [f for f in os.listdir(args.path)
              if any([f.endswith(ext) for ext in exts])]
 
